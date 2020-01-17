@@ -7,8 +7,36 @@ function showHello(divName: string, name: string) {
 
 enum Category { JavaScript, CSS, Angular, TypeScript, HTML }
 
-function getAllBooks(): readonly any[] {
-  const books = <const>[
+interface DamageLogger { (reason: string): void }
+
+interface Book {
+  id: number;
+  title: string;
+  author: string;
+  available: boolean;
+  category: Category;
+  pages?: number;
+  markDamaged?: DamageLogger
+}
+
+interface Person {
+  name: string;
+  email: string;
+}
+
+interface Author extends Person {
+  numBooksPublished: number;
+}
+
+interface Librarian extends Person {
+  department: string;
+  assistCustomer: (custName: string) => void
+}
+
+type BookProperties = keyof Book;
+
+function getAllBooks(): readonly Book[] {
+  const books: readonly Book[] = <const>[
     { id: 1, title: 'Refactoring JavaScript', author: 'Evan Burchard', available: true, category: Category.JavaScript },
     { id: 2, title: 'JavaScript Testing', author: 'Liang Yuxian Eugene', available: false, category: Category.JavaScript },
     { id: 3, title: 'CSS Secrets', author: 'Lea Verou', available: true, category: Category.CSS },
@@ -49,15 +77,15 @@ function getBookAuthorByIndex(i: number): [string, string] {
   return [title, author]
 }
 
-function calcTotalPages(): bigint {
-  const cityLib = <const>[{ lib: 'libName1', books: 1_000_000_000, avgPagesPerBook: 250 }, { lib: 'libName2', books: 5_000_000_000, avgPagesPerBook: 300 }, { lib: 'libName3', books: 3_000_000_000, avgPagesPerBook: 280 }];
-  const result = cityLib.reduce((acc: bigint, obj: any) => {
-    return acc + BigInt(obj.books) * BigInt(obj.avgPagesPerBook);
-  }, 0n)
-  return result;
-}
+// function calcTotalPages(): bigint {
+//   const cityLib = <const>[{ lib: 'libName1', books: 1_000_000_000, avgPagesPerBook: 250 }, { lib: 'libName2', books: 5_000_000_000, avgPagesPerBook: 300 }, { lib: 'libName3', books: 3_000_000_000, avgPagesPerBook: 280 }];
+//   const result = cityLib.reduce((acc: bigint, obj: any) => {
+//     return acc + BigInt(obj.books) * BigInt(obj.avgPagesPerBook);
+//   }, 0n)
+//   return result;
+// }
 
-function getBookByID(i: number): any {
+function getBookByID(i: number): Book | undefined {
   const books = getAllBooks();
   return books.find(book => book.id === i)
 }
@@ -112,9 +140,61 @@ function assertStringValue(param: any): asserts param is string {
   }
 }
 
-function bookTitleTransform(name: any){
+function bookTitleTransform(name: any) {
   assertStringValue(name)
   return [...name].reverse().join('');
+}
+
+function printBook(book: Book): void {
+  console.log(book.title, book.author)
+}
+
+function getBookProp(book: Book, bookProperty: BookProperties): any {
+  if (typeof book[bookProperty] === 'function') {
+    return (book[bookProperty] as Function).name;
+  }
+  else {
+    return book[bookProperty];
+  }
+}
+
+class ReferenceItem {
+  // title: string;
+  // year: number;
+
+  // constructor(newTitle: string, newYear: number) {
+  //   console.log(`Creating a new ReferenceItem`);
+  //   this.title = newTitle;
+  //   this.year = newYear;
+  // }
+  private _publisher: string;
+  static department: string = 'Research';
+
+  get publisher(): string {
+    return this._publisher.toUpperCase()
+  }
+
+  set publisher(newValue: string) {
+    this._publisher = newValue;
+  }
+
+  constructor(public title: string, protected year: number) {
+    //   console.log(`Creating a new ReferenceItem`);
+  }
+  printItem(): void {
+    console.log(`${this.title} was published in ${this.year}`)
+    console.log(`Department ${ReferenceItem.department}`)
+  }
+}
+
+class Encyclopedia extends ReferenceItem {
+  constructor(newTitle: string, newYear: number, public edition: number) {
+    super(newTitle, newYear);
+  }
+  printItem() {
+    super.printItem();
+    console.log(`Edition: ${this.year}`)
+  }
 }
 
 //Task 02.01
@@ -155,3 +235,66 @@ function bookTitleTransform(name: any){
 // console.log(bookTitleTransform(234234))
 
 //Task 04.01
+// const myBook: Book = {
+//   id: 5,
+//   title: 'Colors, Backgrounds, and Gradients',
+//   author: 'Eric A. Meyer',
+//   available: true,
+//   category: Category.CSS,
+//   pages: 200,
+//   markDamaged: (reason) => console.log(`Damaged: ${reason}`)
+// }
+// printBook(myBook)
+// myBook.markDamaged('missing back cover')
+
+//Task 04.02
+// const f = (damage: string) => console.log(`damage ${damage}`)
+// const logDamage: DamageLogger = f;
+// logDamage('damaged book')
+
+//Task 04.03
+// const favoriteAuthor: Author = {
+//   name: 'Erik',
+//   email: 'email',
+//   numBooksPublished: 3
+// }
+
+// const favoriteLibrarian: Librarian = {
+//   name: 'Denis',
+//   email: 'email2',
+//   department: 'Classics',
+//   assistCustomer(custName: string) {
+//     console.log('assistCustomer', custName)
+//   }
+// }
+
+//Task 04.04
+// const offer: any = {
+//   book: {
+//     title: 'Essential TypeScript'
+//   }
+// }
+// console.log(offer?.magazine)
+
+//Task 04.05
+// const myBook: Book = {
+//   id: 5,
+//   title: 'Colors, Backgrounds, and Gradients',
+//   author: 'Eric A. Meyer',
+//   available: true,
+//   category: Category.CSS,
+//   pages: 200,
+//   markDamaged: (reason) => console.log(`Damaged: ${reason}`)
+// }
+// console.log(getBookProp(myBook, 'title'))
+// console.log(getBookProp(myBook, 'markDamaged'))
+
+//Task 05.01
+// const ref: ReferenceItem = new ReferenceItem('New title', 2020);
+// ref.printItem()
+// ref.publisher = 'new Publisher'
+// console.log(ref.publisher)
+
+//Task 05.02
+const refBook: Encyclopedia = new Encyclopedia('Biggest Enc', 2020, 1)
+refBook.printItem();
