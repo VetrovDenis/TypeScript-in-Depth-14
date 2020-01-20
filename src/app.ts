@@ -2,7 +2,7 @@ import { ReferenceItem, UniversityLibrarian, RefBook, Shelf } from "./classes";
 import { Category } from './enums';
 import { Book, Logger, Author, Librarian, Magazine } from './interfaces'
 import { PersonBook, BookRequiredFields, UpdatedBook, createCustomerFunctionType } from './types'
-import { getAllBooks, purge, createCustomer } from './functions'
+import { getAllBooks, purge, createCustomer, getBooksByCategory, logCategorySearch, getBooksByCategoryPromise, logSearchResults } from './functions'
 
 showHello('greeting', 'TypeScript');
 
@@ -207,21 +207,56 @@ function showHello(divName: string, name: string) {
 // createCustomer(...params);
 
 //Task 08.01
+//const obj = new UniversityLibrarian();
 
 //Task 08.02
+// const fLibrarian = new UniversityLibrarian();
+// fLibrarian.name = 'Anna';
+// (fLibrarian as any).printLibrarian();
+// fLibrarian['printLibrarian']();
 
 //Task 08.03
+// const fLibrarian = new UniversityLibrarian();
+// fLibrarian.assitFaculty = null;
+// fLibrarian.teachCommunity = null;
 
 //Task 08.04
+// const refBook: RefBook = new RefBook('Biggest Enc', 2020, 1)
+// refBook.printItem();
 
 //Task 08.05
+// const fLibrarian = new UniversityLibrarian();
+// fLibrarian.name = 'Anna';
+// fLibrarian.assistCustomer('Boris')
 
 //Task 08.06
+// const fLibrarian = new UniversityLibrarian();
+// fLibrarian.name = 'Anna';
+// console.log(fLibrarian.name)
 
 //Task 08.07
+// const refBook: RefBook = new RefBook('Biggest Enc', 2020, 1)
+// refBook.copies = -10;
+// console.log(refBook)
 
 //Task 09.01
+// console.log('Begin')
+// getBooksByCategory(Category.JavaScript, logCategorySearch)
+// console.log('End')
 
 //Task 09.02
+// console.log('Begin')
+// getBooksByCategoryPromise(Category.JavaScript).
+//   then(titles => {
+//     console.log(titles)
+//     return titles.length;
+//   })
+//   .then(length => console.log(length))
+//   .catch(reason => console.log(reason));
+// console.log('End')
 
 //Task 09.03
+// console.log('Begin')
+// logSearchResults(Category.Software)
+//   .catch(reason => console.log(reason));
+// console.log('End')
