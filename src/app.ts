@@ -1,8 +1,8 @@
-import { ReferenceItem, UniversityLibrarian, RefBook } from "./classes";
+import { ReferenceItem, UniversityLibrarian, RefBook, Shelf } from "./classes";
 import { Category } from './enums';
-import { Book, Logger, Author, Librarian } from './interfaces'
-import { PersonBook } from './types'
-import { getAllBooks } from './functions'
+import { Book, Logger, Author, Librarian, Magazine } from './interfaces'
+import { PersonBook, BookRequiredFields, UpdatedBook, createCustomerFunctionType } from './types'
+import { getAllBooks, purge, createCustomer } from './functions'
 
 showHello('greeting', 'TypeScript');
 
@@ -147,12 +147,64 @@ function showHello(divName: string, name: string) {
 // })
 
 //Task 07.01
+// const inventory: Book[] = [
+//   { id: 10, title: 'The C Programming Language', author: 'K & R', available: true, category: Category.Software },
+//   { id: 11, title: 'Code Complete', author: 'Steve McConnell', available: true, category: Category.Software },
+//   { id: 12, title: '8-Bit Graphics with Cobol', author: 'A. B.', available: true, category: Category.Software },
+//   { id: 13, title: 'Cool autoexec.bat Scripts!', author: 'C. D.', available: true, category: Category.Software }
+// ];
+// const purgedInventrory = purge(inventory);
+// console.log(purgedInventrory)
+
+// const inventory2: number[] = [1, 2, 3, 4, 5, 6];
+// const purgedInventrory2 = purge(inventory2);
+// console.log(purgedInventrory2)
 
 //Task 07.02
+// const inventory: Book[] = [
+//   { id: 10, title: 'The C Programming Language', author: 'K & R', available: true, category: Category.Software },
+//   { id: 11, title: 'Code Complete', author: 'Steve McConnell', available: true, category: Category.Software },
+//   { id: 12, title: '8-Bit Graphics with Cobol', author: 'A. B.', available: true, category: Category.Software },
+//   { id: 13, title: 'Cool autoexec.bat Scripts!', author: 'C. D.', available: true, category: Category.Software }
+// ];
+// const newShelf: Shelf<Book> = new Shelf<Book>();
+// inventory.forEach(book => {
+//   newShelf.add(book)
+// })
+// const first = newShelf.getFirst()
+// console.log(first);
+
+// const magazines = [
+//   { title: 'Programming Language Monthly', publisher: 'Code Mags' },
+//   { title: 'Literary Fiction Quarterly', publisher: 'College Press' },
+//   { title: 'Five Points', publisher: 'GSU' }
+// ];
+// const magazinesShelf: Shelf<Magazine> = new Shelf<Magazine>();
+// magazines.forEach(book => {
+//   magazinesShelf.add(book)
+// })
+// const firstMagazine = magazinesShelf.getFirst()
+// console.log(firstMagazine);
+
 
 //Task 07.03
+// const magazines = [
+//   { title: 'Programming Language Monthly', publisher: 'Code Mags' },
+//   { title: 'Literary Fiction Quarterly', publisher: 'College Press' },
+//   { title: 'Five Points', publisher: 'GSU' }
+// ];
+// const magazinesShelf: Shelf<Magazine> = new Shelf<Magazine>();
+// magazines.forEach(book => {
+//   magazinesShelf.add(book)
+// })
+// magazinesShelf.printTitles()
+// console.log(magazinesShelf.find('Five Points'));
 
 //Task 07.04
+// const book: BookRequiredFields = { pages: 100, markDamaged: null, id: 10, title: 'The C Programming Language', author: 'K & R', available: true, category: Category.Software };
+// const updatedBook: UpdatedBook = { id: 10 }
+// const params: Parameters<createCustomerFunctionType> = ['Anna']
+// createCustomer(...params);
 
 //Task 08.01
 
